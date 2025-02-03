@@ -1,45 +1,47 @@
 <template>
     <div class="page">
-        <div v-show="snapshot.value.Playback != 'Playing'" class="text">
-            <h1>PlayerView</h1>
-            <p>Это страница с плеером</p>
-            <button
-                :class="['button', {
-                    pause: snapshot.value.Playback == 'Stopped' || snapshot.value.Playback == 'Paused'
-                }]"
-                @click="send({
-                    type: (snapshot.value.Playback == 'Stopped' || snapshot.value.Playback == 'Paused') ? 'PLAY' : 'PAUSE'
-                })"
-            >
-                <svg
-                    v-if="snapshot.value.Playback != 'Playing'"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="icon icon-tabler icons-tabler-filled icon-tabler-player-play"
+        <Transition name="fade">
+            <div v-show="snapshot.value.Playback != 'Playing'" class="text">
+                <h1>PlayerView</h1>
+                <p>Это страница с плеером</p>
+                <button
+                    :class="['button', {
+                        pause: snapshot.value.Playback != 'Playing'
+                    }]"
+                    @click="send({
+                        type: (snapshot.value.Playback != 'Playing') ? 'PLAY' : 'PAUSE'
+                    })"
                 >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" />
-                </svg>
+                    <svg
+                        v-if="snapshot.value.Playback != 'Playing'"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="icon icon-tabler icons-tabler-filled icon-tabler-player-play"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" />
+                    </svg>
 
-                <svg
-                    v-if="snapshot.value.Playback == 'Playing'"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24" 
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="icon icon-tabler icons-tabler-filled icon-tabler-player-pause"
-                >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" />
-                    <path d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" />
-                </svg>
-            </button>
-            
-        </div>
+                    <svg
+                        v-if="snapshot.value.Playback == 'Playing'"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24" 
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        class="icon icon-tabler icons-tabler-filled icon-tabler-player-pause"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" />
+                        <path d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" />
+                    </svg>
+                </button>
+                
+            </div>
+        </Transition>
         <div class="panel">
             <button
                 :class="['button', { pause: snapshot.value.Playback != 'Playing' }]"
@@ -53,7 +55,7 @@
                 />
 
                 <IconPlayerPlay
-                    v-if="snapshot.value.Playback == 'Paused'"
+                    v-if="snapshot.value.Playback != 'Playing'"
                     stroke={3}
                 />
             </button>
@@ -149,10 +151,10 @@ export default {
                         },
                         Stopped: {
                             entry: { type: 'stopVideo' },
-                            after: {
-                                '5000': [{
-                                    actions: ['stopVideo'],
-                                    reenter: false
+                            on: {
+                                PLAY: [{
+                                    target: 'Playing',
+                                    reenter: true
                                 }]
                             }
                         }
@@ -324,8 +326,15 @@ export default {
 }
 .text {
     position: absolute;
+    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0, 0.8);
     z-index: 1;
 }
 .button {
@@ -368,5 +377,12 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.fade-enter-active, .fade-move {
+  transition: all .3s cubic-bezier(.17,.67,.4,1);
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
 }
 </style>
