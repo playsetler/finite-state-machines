@@ -122,7 +122,6 @@ export default {
     setup() {
         const { full } = useTheme()
         const player = ref(null)
-        const container = ref({ width: '900px' })
 
         const videoStateMachine = createMachine({
             id: 'Video Player',
@@ -247,60 +246,6 @@ export default {
                 }
             }
         })
-
-        /* const videoStateMachine = createMachine({
-            id: "videoStateMachine",
-            initial: "pauseState",
-            states: {
-                pauseState: {
-                    entry: { type: "pauseVideo" },
-                    on: {
-                        TOGGLE_PLAY: { target: 'playState' },
-                        TOGGLE_SIZE: { target: 'fullState' }
-                    },
-                },
-                playState: {
-                    entry: { type: "playVideo" },
-                    on: {
-                        TOGGLE_PLAY: { target: 'playState' },
-                        TOGGLE_SIZE: { target: 'toggleSize' }
-                    },
-                },
-                fullState: {
-                    entry: { type: "fullSize" },
-                    on: {
-                        TOGGLE_PLAY: { target: 'playState' },
-                        TOGGLE_SIZE: { target: 'miniState' }
-                    },
-                },
-                miniState: {
-                    entry: { type: "miniSize" },
-                    on: {
-                        TOGGLE_PLAY: { target: 'playState' },
-                        TOGGLE_SIZE: { target: 'fullState' }
-                    },
-                }
-            }
-        },
-        {
-            actions: {
-                playVideo: (context, event) => {
-                    player.value.play()
-                },
-                pauseVideo: (context, event) => {
-                    player.value.pause()
-                },
-                toggleMute: () => {
-                    player.value.muted = !player.value.muted
-                },
-                fullSize: () => {
-                    full.value = true
-                },
-                miniSize: () => {
-                    full.value = false
-                }
-            }
-        }) */
 
         const { snapshot, send } = useMachine(videoStateMachine)
 

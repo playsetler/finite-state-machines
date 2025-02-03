@@ -1,4 +1,4 @@
-import { ref, watch } from "vue";
+import { ref, watch } from "vue"
 
 const theme = ref(false)
 const full = ref(false)
