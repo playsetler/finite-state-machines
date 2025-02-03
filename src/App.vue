@@ -2,7 +2,6 @@
 	<div :class="['container', { 'full-size': full }]">
 		<Header />
 		<Main />
-		<Footer />
 	</div>
 </template>
 
