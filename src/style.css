@@ -62,7 +62,6 @@ body.DARK {
 #app {
   width: 100%;
   backdrop-filter: blur(2px);
-  
 }
 
 .container {
@@ -89,6 +88,7 @@ footer {
 
 main {
   flex: 0 1 60%;
+  height: 60%;
   border: 3px solid rgba(0, 0, 0, 0.3);
   background-color: rgba(0, 0, 0, 0.4);
 }
@@ -122,9 +122,6 @@ button {
 
 .fade-enter-active, .fade-move {
   transition: all .8s cubic-bezier(.17,.67,.4,1);
-}
-.fade-leave-active {
-  
 }
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
