@@ -1,13 +1,16 @@
 <template>
-	<Header />
-	<Main />
-	<Footer />
+	<div :class="['container', { 'full-size': full }]">
+		<Header />
+		<Main />
+		<Footer />
+	</div>
 </template>
 
 <script>
 import Header from './components/layout/Header.vue'
 import Main from './components/layout/Main.vue'
 import Footer from './components/layout/Footer.vue'
+import { useTheme } from '@/hooks/useTheme'
 
 export default {
 	components: {
@@ -16,7 +19,9 @@ export default {
 		Footer
 	},
     setup() {
+		const { full } = useTheme()
 
+		return { full }
     },
 }
 </script>

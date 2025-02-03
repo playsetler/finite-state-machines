@@ -1,8 +1,11 @@
-import { ref, watch, onBeforeMount } from "vue";
+import { ref, watch } from "vue";
 
 const theme = ref(false)
+const full = ref(false)
 
 export function useTheme() {
+    theme.value = localStorage.getItem("theme") == 'DARK'
+
     const getStringTheme = (themeValue) => themeValue ? 'DARK' : 'LIGHT'
 
     const toggleTheme = () => {
@@ -14,13 +17,10 @@ export function useTheme() {
         document.body.className = getStringTheme(newTheme);
     }, { immediate: true })
 
-    onBeforeMount(() => {
-        theme.value = localStorage.getItem("theme") == 'DARK'
-    })
-
     return {
         toggleTheme,
-        theme
+        theme,
+        full
     }
 }
 

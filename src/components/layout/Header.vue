@@ -41,6 +41,7 @@ export default {
     flex-flow: row wrap;
     gap: 20px;
     align-items: center;
+    transition: all 0.5s ease-in-out;
 }
 .logo,
 .nav,
@@ -49,6 +50,10 @@ export default {
 }
 .logo {
     flex: 0 0 20%;
+}
+.logo a {
+    display: flex;
+    align-items: center;
 }
 .logo img {
     width: 100%;
@@ -82,6 +87,7 @@ export default {
 }
 .DARK .theme-toggle button {
     background-color: #333;
+    transition: all 0.3s ease-in-out;
 }
 .lightToggleIcon {
     color: #fff;
