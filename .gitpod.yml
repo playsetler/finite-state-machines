@@ -2,4 +2,4 @@ tasks:
   - init: echo "Hello from Gitpod"
 
 workspaceLocation:
-  region: europe-west1
+  region: us-east1
